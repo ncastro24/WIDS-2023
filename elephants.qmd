@@ -1,0 +1,107 @@
+---
+title: "Elephants WiDS Team"
+author: Nayeli Castro, Liora Mayats Alpay, Nathan Nguyen, Ellie Strande
+format:
+    html:
+        toc: true
+        number-sections: true
+        colorlinks: true
+        number-depth: 2
+jupyter: python3
+---
+
+# Progress so Far
+So far, out team has been making progress by learning more about xgboost and creating our first model with it with standard hyper parameters without testing for better ones. We also did a linear regression model just to see how the data runs and gauge a linear model performance. So far, XGBoost appears to be overfit, so we deifnitely will have to tune our hyper parameters better with more research into the best values for them. What might take us a lot of time is actually figuring out these parameters and determining how to improve our model even more. 
+
+## Imports
+```{python}
+#| eval : false
+import warnings 
+warnings.filterwarnings('ignore')
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from sklearn.model_selection import train_test_split 
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import LinearRegression # Linear Regression Model
+from sklearn.preprocessing import StandardScaler #Z-score variables
+from sklearn.metrics import mean_squared_error, r2_score #model evaluation
+from sklearn.model_selection import KFold # k-fold cv
+from sklearn.model_selection import LeaveOneOut #LOO cv
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+import xgboost as xgb
+%matplotlib inline
+```
+
+## Data Cleaning
+
+```{python}
+#| eval : false
+#Drop missing values 
+trainData = trainData.dropna()
+#Find which variables are strings/continuous (objects)
+typesDF = pd.DataFrame(trainData.dtypes)
+typesDF
+#Create list of predictor variables
+preds = list(trainData)
+preds.remove('index')
+preds.remove('lat')
+preds.remove('startdate')
+preds.remove('climateregions__climateregion')
+preds.remove('mjo1d__phase')
+preds.remove('mei__meirank')
+preds.remove('mei__nip')
+preds.remove('contest-tmp2m-14d__tmp2m')
+X = trainData[preds]
+y = trainData['contest-tmp2m-14d__tmp2m']
+```
+
+## Simple Linear Regression Model
+
+```{python}
+#| eval : false
+#Train test split
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 5)
+#Standardize/Z score
+z = StandardScaler()
+X_train[preds] = z.fit_transform(X_train[preds])
+X_val[preds] = z.transform(X_val[preds])
+#Create and fit model
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+#Predictions
+y_pred = lr.predict(X_val)
+#Print Training MSE
+print('Train MSE: ', mean_squared_error(y_train, lr.predict(X_train)))
+#Print Testing MSE
+print('Test MSE: ', mean_squared_error(y_val, y_pred))
+```
+
+# Introduction
+
+## The problem we are solving
+
+Our goal is to improve the accuracy of longe-range weather forecasts regarding temperature and precipitation by using machine learning models. The availability of meteorological data provided by Kaggle allows us to have the opportunity to help improve the methods used to predict weather by using our own models that learn from a previous series of weather forecasts.
+
+## Why is this problem important? 
+
+The problem we are solving is important because accurate long-term forecast predictions can help people prepare for extreme weather conditions in advance. Weather is currently a topic that is unable to be predicted accurately past a short period of time, so any contribution towards the improvement of predicting weather in a long-term sense will be beneficial over all. The ability to predict weather long-term accurately also helps with observing the effects of climate change.
+
+## Background information 
+
+Ideally, our reader will have some knowledge on climate change and weather modeling. Knowledge on time data modeling such as linear regression is necessary. General background information on the Kaggle competition itself and the data provided can be found [here](https://www.kaggle.com/competitions/widsdatathon2023/overview).
+
+# Data
+
+# Modeling
+
+# Improvements
+
+# Limitations
+
+# Kaggle Submission
+
+Our placement on the Kaggle WiDS Datathon 2023 competition as of January 19, 2023 is 110th place with a MSE of 1.525. This submission was made with our starting linear regression model. 
+
+# Conclusion 

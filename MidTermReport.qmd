@@ -1,0 +1,104 @@
+---
+title: "Midterm Report"
+author: Ellie Strande, Nathan Nguyen, Nayeli Castro
+format:
+    html:
+        code-background: true
+        toc: true
+# engine: knitr
+# jupyter: python3
+---
+
+# Introduction
+- What problem are you solving?
+    - improve longer-range weather forecasts
+    - trying to imrpove accrurate long-term forcasts of tempterature and precipitation
+    - availability of meteorological data offers opportunity to improve sub-seasonal forecasts by blending physics-based forecasts with machine learning
+- Why is this problem important? 
+    - sub-seasonal forecasts for weather and climate conditions would help communities and industries adapt to the challenges brought on my climate change
+    - help people prepare and adapt to extreme weather events caused by climate change
+    - can predict natural disasters in advance
+    - useful in research & bio studies & ecosystem studies
+    - useful in understanding polution & how it impacts weather
+- What background information would someone need to understand your post?
+    - background on climate change
+    - more detail on exactly what we are predicting
+    - purely physics-based models dominate short-term weather forcasting 
+        - have limited forecast horizon
+- Outline other sections
+
+# Data
+- Tell us about your data set (focus on relevant variables rather than listing)
+    - Group sets of variables together and describe them
+    - Only include variables you used/was impactful
+    - TARGET VARIABLE: contest-tmp2m-14d__tmp2m
+- Did you do anything to clean the data?
+    - removed categorical variables
+    - did PCA to make the data faster
+- How big is the data and how did that impact your process? 
+    - makes it computationaly expensive
+    - does not impact the ability of the model to run
+- What did you do about missing data?
+    -  dropna()
+- Link data for people to follow along
+    - train data: https://www.kaggle.com/competitions/widsdatathon2023/data?select=train_data.csv 
+    - test data: https://www.kaggle.com/competitions/widsdatathon2023/data?select=test_data.csv
+
+# Modeling
+- How did you decide on a type of model?
+- Describe the basics of how your model works (to a lay audience)
+    - good for time-series data/long-term models
+    - wanted to have the ability to make design decisions and tune hyperparameters to determine the most optimal parameters and best fit model
+- What are the benefits and drawback of your type of model?
+    - XGBoost picks up patterns and regularities in the data by automatically tuning thousands of learnable parameters
+- Were there models you tried that didn't end up being chosen?
+- What hyperparameters does your model have?
+    - hyperparameters -> certain values or weights that determine the learning process of an algorithm
+    - XGBoost provides large range of hyperparameters
+- How did you select those hyperparameters?
+    - Bayesian optimization -> optimization/finding best parameters for ML model
+        - uses Hyperopt to tune model hyperparameters
+    - HYPEROPT -> python library, searches though hyperparameter space of values to find possible values that lead to minimum loss function
+- + any notes on the modeling journey
+
+# Improvements
+- Things you would like to improve in your model if you had the time
+    - Continue working on improving our hyperparameter tuning
+- Assuming you were going to continue to work on this model... what improvements could you make?
+
+# Limitations
+- Does the data have any limitations that prevented you from building a better model?
+    - Theres a lot of missing data that had to be dropped
+    - Data had so many columns making it hard to determine what the variables meant
+    - Data so large we didn't have a solid understanding of what variables were most important
+    - We don't have enough knowlege on climate change and meteorology to determine what variables mean/are useful
+- What other data, cleanliness, or structure would you want?
+    - More organized variable names
+- Do the types of models you used have any limitations that might cause your model to not be as successful as it could be?
+    - Hyperparameter tuning for XGBoost can be extreamly difficult, leading to limitations when trying to determine what hyperparameters to select
+    - Lack of knowlege on how to successfully hyperparameter tune can limit the success of the model
+- Were you limited by your ML knowlege at all? What would you spend time learning to help improve your model?
+    - Understanding how to better handle missing data in order to not loose all of those data points
+    - Learning more about hyperparameter tuning and the best way to optimize our hyperparameters
+
+# Kaggle Submission
+- What place are you currently on the Kaggle leaderboard? (include screenshot)
+    - We are currently 110 on the leaderboard 
+    - Our best MSE is 1.525 
+    - This submission is with our starting linear regression model
+- Reflect on your placement
+
+# Conclusion
+- Why should the reader care about your modeling journey?
+    - Why is XGBoost important/why is it so successful for these types of competitions
+    - Our process of learning XGBoost/what challenges we had to overcome/how we learned hyperparameter tuning
+- How could your model be used in the real world?
+    - Our model could be used in the real world to improve longer-range weather forecasts that are currently dominated by more physics-based models
+    - Could be used to prepare for natural disasters brought on by climate change
+    - Can be used to predict natural disasters in advance
+- What did you learn from this experience?
+    - How to utalize XGBoost
+    - How to tune hyperparameters, more specifically for XGBoost
+    - How to work with time-series data
+    - How to clean data and work with large, unclean, unorganized datasets 
+    - How to collaborate with a team coming from different backgrounds and experience levels to achieve a common goal
